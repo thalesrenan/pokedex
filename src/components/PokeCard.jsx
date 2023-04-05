@@ -9,6 +9,7 @@ const PokeCard = () => {
     const [offset, setOffset] = useState(0);
     const [pokeDetails, setPokeDetails] = useState([]);
     const [open, setOpen] = useState(false);
+    const [pokeId, setPokeId] = useState(1);
 
     useEffect(() => {
         async function loadPokemon(){
@@ -47,8 +48,10 @@ const PokeCard = () => {
                 console.log(error);
           }
         }
-        loadDetails(pokemonList);
-      }, []);
+        if(pokemonList.length > 0){
+           loadDetails(pokemonList);
+        }
+      }, [pokemonList]);
 
 
       const showModal = () => {
@@ -61,13 +64,14 @@ const PokeCard = () => {
 
   return (
     <div className="App">
-      <PokeModal pokeDetails={pokeDetails} show={open} handleClose={hideModal}/>
+      <PokeModal pokeId={pokeId} show={open} handleClose={hideModal}/>
         <ol id="pokemonList" className="pokemons">
             {pokeDetails.map(pokemon => (
                 <li 
                 key={pokemon.id} 
                 className={`pokemon ${pokemon.types[0].type.name}`}
                 onClick={()=>{
+                  setPokeId(pokemon.id)
                   showModal();
                 }}
                 >
@@ -88,8 +92,7 @@ const PokeCard = () => {
                 </li>
             ))}
         </ol>
-        <button onClick={previousPage}>Voltar</button>
-        <button onClick={nextPage}>Avançar</button>
+        <button onClick={nextPage}>Load More</button>
     </div>
   );
 }
