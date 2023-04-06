@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../../services/api";
 import "./style.css";
 
@@ -7,21 +7,17 @@ const PokeModal = ({pokeId, handleClose, show }) => {
     const [pokeDetail, setPokeDetail] = useState([]);
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
-    useEffect(() => {
-        function loadDetails(){
-            api.get(pokeId.toString(), {})
-            .then((response)=>{setPokeDetail(response.data)})
-            .catch((error)=> console.log(error))
-        }
-        if(pokeId > 0){
-           loadDetails();
-        }
-      }, []);
-
-      console.log(pokeId)
+    function loadDetails(){
+        api.get(pokeId.toString(), {})
+        .then((response)=>{setPokeDetail(response.data)})
+        .catch((error)=> console.log(error))
+    }
+    if(pokeId > 0){
+        loadDetails();
+    }
 
     return (
-          <div key={pokeDetail.id} className="modal--wrapper">
+        !pokeDetail && <div key={pokeDetail.id} className="modal--wrapper">
               <div className={showHideClassName}>
                   <header className="header--modal">
                       <p>{pokeDetail.name}</p>
@@ -30,23 +26,24 @@ const PokeModal = ({pokeId, handleClose, show }) => {
                       </button>
                   </header>        
                   <main>
-                      <img src={pokeDetail.sprites.other.dream_world.front_default} alt={pokeDetail.name} />
-                          <ol className="baseStats">
-                              {
-                                  pokeDetail.stats.map((status, index)=>{
-                                      return(
-                                          <div key={index} className="status--details">
-                                              <p>{status.stat.name}</p>
-                                              <li>{status.base_stat}</li>
-                                          </div>
-                                      )
-                                  })
-                              }
-                          </ol>
+                    <img src={pokeDetail.sprites.other.dream_world.front_default} alt={pokeDetail.name} />
+                    <div> 
+                        {pokeDetail.stats.map((status, index)=>{
+                            <div key={index}>
+                                <p>{status.stat.name}</p>
+                                <p>{status.base_stat}</p>
+                            </div>
+                            }
+                        )}
+                    </div>
                   </main>            
               </div>
-          </div>
-          )
+            </div>
+        )
     }
 
 export default PokeModal;
+
+/*
+
+*/

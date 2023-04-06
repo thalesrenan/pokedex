@@ -6,10 +6,10 @@ import PokeModal from "./modal/Modal";
 const PokeCard = () => {
 
     const [pokemonList, setPokemonList] = useState([]);
-    const [offset, setOffset] = useState(0);
     const [pokeDetails, setPokeDetails] = useState([]);
     const [open, setOpen] = useState(false);
-    const [pokeId, setPokeId] = useState(1);
+    const [offset, setOffset] = useState(0);
+    const [pokeId, setPokeId] = useState(0);
 
     useEffect(() => {
         async function loadPokemon(){
@@ -32,10 +32,6 @@ const PokeCard = () => {
         setOffset(offset + 20);
       }
     
-      function previousPage(){
-        setOffset(offset - 20);
-      }
-    
       useEffect(() => {
         function loadDetails(list){
           try {
@@ -53,7 +49,6 @@ const PokeCard = () => {
         }
       }, [pokemonList]);
 
-
       const showModal = () => {
         setOpen(true);
       };
@@ -64,7 +59,7 @@ const PokeCard = () => {
 
   return (
     <div className="App">
-      <PokeModal pokeId={pokeId} show={open} handleClose={hideModal}/>
+      {/* <PokeModal pokeId={pokeId} show={open} handleClose={hideModal}/> */}
         <ol id="pokemonList" className="pokemons">
             {pokeDetails.map(pokemon => (
                 <li 
