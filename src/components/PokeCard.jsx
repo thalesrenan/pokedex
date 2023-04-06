@@ -9,7 +9,7 @@ const PokeCard = () => {
     const [pokeDetails, setPokeDetails] = useState([]);
     const [open, setOpen] = useState(false);
     const [offset, setOffset] = useState(0);
-    const [pokeId, setPokeId] = useState(1);
+    const [pokeId, setPokeId] = useState(0);
 
     useEffect(() => {
          function loadPokemon(){

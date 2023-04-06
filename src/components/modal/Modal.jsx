@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../../services/api";
 import "./style.css";
 
@@ -7,18 +7,16 @@ const PokeModal = ({pokeId, handleClose, show }) => {
     const [pokeDetail, setPokeDetail] = useState([]);
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
-
-    useEffect(()=>{
         function loadDetails(id){
             api.get(id.toString(), {})
             .then((response)=>{setPokeDetail(response.data)})
             .catch((error)=> console.log(error))
         }
         loadDetails(pokeId);
-    },[pokeId])
-
+    
     return (
-        <div key={pokeDetail.id} className="modal--wrapper">
+    
+        pokeId > 0 ? (<div key={pokeDetail.id} className="modal--wrapper">
               <div className={`${showHideClassName} ${pokeDetail.types[0].type.name}`}>
                   <header className="header--modal">
                       <p>{pokeDetail.name}</p>
@@ -27,7 +25,7 @@ const PokeModal = ({pokeId, handleClose, show }) => {
                       </button>
                   </header>        
                   <main>
-                    <img src={pokeDetail.sprites.other.dream_world.front_default} alt={pokeDetail.name} />
+                  <img src={pokeDetail.sprites.other.dream_world.front_default} alt={pokeDetail.name} />
                     <div> 
                         {pokeDetail.stats.map((status, index)=>{
                             return(
@@ -41,7 +39,9 @@ const PokeModal = ({pokeId, handleClose, show }) => {
                     </div>
                   </main>            
               </div>
-        </div>
+        </div>):(
+            <div>Loading</div>
+        )
         )
     }
 
@@ -51,10 +51,12 @@ export default PokeModal;
 <img src={pokeDetail.sprites.other.dream_world.front_default} alt={pokeDetail.name} />
                     <div> 
                         {pokeDetail.stats.map((status, index)=>{
-                            <div key={index}>
-                                <p>{status.stat.name}</p>
-                                <p>{status.base_stat}</p>
-                            </div>
+                            return(
+                                <div key={index} className="modal--stats">
+                                    <p>{status.stat.name}</p>
+                                    <p>{status.base_stat}</p>
+                                </div>
+                                )
                             }
                         )}
                     </div>
