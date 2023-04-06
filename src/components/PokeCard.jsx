@@ -9,21 +9,17 @@ const PokeCard = () => {
     const [pokeDetails, setPokeDetails] = useState([]);
     const [open, setOpen] = useState(false);
     const [offset, setOffset] = useState(0);
-    const [pokeId, setPokeId] = useState(0);
+    const [pokeId, setPokeId] = useState(1);
 
     useEffect(() => {
-        async function loadPokemon(){
-          try {
-            const response = await api.get("", {
-              params: {
-                limit: 20,
-                offset: offset,
-              }
-            });
-            setPokemonList(response.data.results);
-          } catch (error) {
-            console.log(error);
-          }
+         function loadPokemon(){
+          api.get("", {
+            params: {
+              limit: 20,
+              offset: offset,
+            }
+          }).then((response)=>setPokemonList(response.data.results))
+          .catch((error)=>console.log(error))
         }
         loadPokemon();
       }, [offset]);
@@ -34,16 +30,11 @@ const PokeCard = () => {
     
       useEffect(() => {
         function loadDetails(list){
-          try {
-            list.forEach(async (pokemon)=>{
-                const response = await api.get(pokemon.url, {
-                });
-                setPokeDetails((pokeDetails)=>[...pokeDetails, response.data]);
-            })
-            } catch (error) {
-                console.log(error);
-          }
-        }
+            list.map(async (pokemon)=>{
+                await api.get(pokemon.url)
+                .then((response)=>setPokeDetails((pokeDetails)=>[...pokeDetails, response.data]))
+                .catch((error)=>console.log(error))
+            })}
         if(pokemonList.length > 0){
            loadDetails(pokemonList);
         }
@@ -59,7 +50,7 @@ const PokeCard = () => {
 
   return (
     <div className="App">
-      {/* <PokeModal pokeId={pokeId} show={open} handleClose={hideModal}/> */}
+      <PokeModal pokeId={pokeId} show={open} handleClose={hideModal}/>
         <ol id="pokemonList" className="pokemons">
             {pokeDetails.map(pokemon => (
                 <li 
