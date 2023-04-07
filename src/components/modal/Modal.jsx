@@ -7,16 +7,14 @@ const PokeModal = ({pokeId, handleClose, show }) => {
     const [pokeDetail, setPokeDetail] = useState([]);
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
-        function loadDetails(id){
-            api.get(id.toString(), {})
-            .then((response)=>{setPokeDetail(response.data)})
-            .catch((error)=> console.log(error))
-        }
-        loadDetails(pokeId);
+        api.get(pokeId.toString(), {})
+        .then((response)=>{setPokeDetail(response.data)})
+        .catch((error)=> console.log(error))
     
+      
     return (
     
-        pokeId > 0 ? (<div key={pokeDetail.id} className="modal--wrapper">
+        !pokeDetail.length>0 ? (<div key={pokeDetail.id} className="modal--wrapper">
               <div className={`${showHideClassName} ${pokeDetail.types[0].type.name}`}>
                   <header className="header--modal">
                       <p>{pokeDetail.name}</p>
