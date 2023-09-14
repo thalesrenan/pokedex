@@ -33,7 +33,6 @@ const PokeCard = () => {
         api
           .get(pokemon.url)
           .then((response) => {
-            //let sorted = response.sort((a, b) => { return a - b })
             setPokeDetails((pokeDetails) => [...pokeDetails, response.data]);
           })
           .catch((error) => console.log(error));
@@ -102,6 +101,7 @@ const PokeCard = () => {
         Load More
       </button>
       <PokeModal
+        
         pokeDetail={singleDetails}
         handleClose={hideModal}
         show={open}

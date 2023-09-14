@@ -1,4 +1,5 @@
 import "./style.css";
+import sample from "../sample.json"
 
 const PokeModal = ({ pokeDetail, handleClose, show }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
@@ -8,7 +9,10 @@ const PokeModal = ({ pokeDetail, handleClose, show }) => {
       <div className={`${showHideClassName} ${pokeDetail.types[0].type.name}`}>
         <header className="header--modal">
           <p>{pokeDetail.name}</p>
-          <button className="modal--button" onClick={handleClose}>
+          <button className="modal--button" onClick={() => {
+            handleClose()
+            pokeDetail = sample
+          }}>
             X
           </button>
         </header>
