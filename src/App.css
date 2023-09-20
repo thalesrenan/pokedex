@@ -210,7 +210,7 @@ body {
 
 button {
   padding: .25rem .5rem;
-  margin: .25rem 0;
+  margin: .25rem .5rem;
   font-size: .625rem;
   color: #fff;
   background-color: #6c79db;
