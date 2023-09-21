@@ -156,6 +156,7 @@ body {
   padding: 1rem;
   border-radius: 1rem;
   cursor:pointer;
+  width: 13rem;
 }
 
 .pokemon .number {
@@ -220,7 +221,7 @@ button {
 
 @media screen and (min-width: 380px) {
   .pokemons {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
   }
 }
 
@@ -241,4 +242,3 @@ button {
       grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
-
